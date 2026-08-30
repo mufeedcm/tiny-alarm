@@ -4,6 +4,7 @@
 #include "rtc.h"
 #include "button.h"
 #include "ui.h"
+#include "buzzer.h"
 
 static UI_State current_state = UI_STATE_CLOCK;
 
@@ -55,6 +56,7 @@ static void ui_render_alarm_list(){
   display_write_string("Alarm list");
   display_set_cur(60, 3);
   display_write_string("wip");
+  buzz_alarm_beep();
 }
 
 static uint8_t edit_field = 0;
@@ -166,6 +168,7 @@ void ui_update(void){
       }
 
       current_state = (current_state + 1 ) % 3; //loop back
+      buzz_click_beep();
 
       if(current_state == UI_STATE_EDIT_CLOCK){
         rtc_get_time(&edit_time);

@@ -3,6 +3,7 @@
 #include "i2c.h"
 #include "rtc.h"
 #include "button.h"
+#include "buzzer.h"
 #include "ssd1306.h"
 #include "ui.h"
 
@@ -12,6 +13,8 @@ int main(void){
   rtc_init();
   btn_init();
   ui_init();
+  buzz_init();
+  buzz_click_beep();
   while (1) {
     ui_update();
     _delay_ms(100);
