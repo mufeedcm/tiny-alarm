@@ -1,7 +1,7 @@
 MCU = atmega328p
 F_CPU = 1000000UL
 PORT = /dev/ttyUSB0
-SRC = src/*.c
+SRC = src/*.c src/ui/*.c
 VERSION = 0.0.0
 
 all:	flash
