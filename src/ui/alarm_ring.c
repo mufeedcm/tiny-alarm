@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "../ssd1306.h"
 #include "../rtc.h"
+#include "../buzzer.h"
 #include "ui_internal.h"
 
 static const char *day_names[]={"","MON","TUE","WED","THU","FRI","SAT","SUN"};
@@ -18,21 +19,19 @@ static void ui_render_time(rtc_time time){
     display_write_string(time_str);
 }
 
-static void ui_render_date(rtc_time time){
-    char date_str[20];
+static void ui_render_btn_info(){
 
-    uint8_t day_i = (time.day >= 1 && time.day <= 7 ) ? time.day : 1;
-    uint8_t month_i = (time.month >= 1 && time.month <= 12 ) ? time.month : 1;
-    uint8_t yr = time.year % 100;
-
-    snprintf(date_str, sizeof(date_str), "%s %02d %s 20%02d", day_names[day_i], time.date, month_names[month_i],yr);
-    display_set_cur(20, 3);
-    display_write_string(date_str);
+    display_set_cur(40, 3);
+    display_write_string("[STOP]");
+    display_set_cur(80, 3);
+    display_write_string("[SNOOZE]");
 }
-void ui_render_clock(){
+void ui_render_alarm_ring(){
     rtc_time now;
     rtc_get_time(&now);
 
     ui_render_time(now);
-    ui_render_date(now);
+    ui_render_btn_info();
+    buzz_alarm_beep();
 }
+

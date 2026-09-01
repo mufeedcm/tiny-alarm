@@ -1,5 +1,6 @@
 #include "../ssd1306.h"
 #include "../buzzer.h"
+#include "ui_internal.h"
 
 void ui_render_alarms(){
   display_set_cur(40, 1);

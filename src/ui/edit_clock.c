@@ -3,7 +3,6 @@
 #include "../ssd1306.h"
 #include "../rtc.h"
 #include "../button.h"
-#include "../buzzer.h"
 #include "ui_internal.h"
 
 #define CHANGED_HOUR    (1 << 0)
