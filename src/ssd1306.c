@@ -62,17 +62,30 @@ void display_init(void) {
   display_clear();  
 }
 
-void display_write_char(char c) {
+void display_write_char(char c , uint8_t col, uint8_t p) {
+  display_set_cur(col, p);
   if (c < 32 || c > 126) c = ' '; 
   for (uint8_t i = 0; i < 5; i++) {
-    uint8_t line = pgm_read_byte(&font[c - 32][i]);
-    display_data(line); 
+    uint8_t data = pgm_read_byte(&font[c - 32][i]);
+    display_data(data << 1); 
   }
   display_data(0x00); //1px gap b/w letters
 }
 
-void display_write_string(const char *str) {
+void display_write_string(const char *str, uint8_t col, uint8_t p) {
   while (*str) {
-    display_write_char(*str++);
+    display_write_char(*str++,col,p);
+    col += 6;
+  }
+}
+
+void display_write_big_digits(uint8_t digits, uint8_t col) {
+  uint8_t width = 13; 
+  for (uint8_t p = 0; p < 3; p++) {
+    display_set_cur(col, p);
+    for (uint8_t c = 0; c < width; c++) {
+      uint8_t data = pgm_read_byte(&font_big_num[digits][p][c]);
+      display_data(data);
+    }
   }
 }

@@ -109,10 +109,8 @@ void ui_render_edit_clock(uint8_t btn){
     snprintf(line2, sizeof(line2), "%s %02d %s 20%02d", day_names[day_i], draft_time.date, month_names[month_i], yr);
   }
 
-  display_set_cur(20, 1);
-  display_write_string(line1);
-  display_set_cur(15, 3);
-  display_write_string(line2);
+  display_write_string(line1, 20, 1);
+  display_write_string(line2, 15, 3);
 }
 
 void ui_edit_clock_init(){
