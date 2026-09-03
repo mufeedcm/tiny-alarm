@@ -62,6 +62,11 @@ void display_init(void) {
   display_clear();  
 }
 
+void display_set_brightness(uint8_t contrast){
+  display_cmd(SSD1306_SETCONTRAST);
+  display_cmd(contrast);
+}
+
 void display_write_char(char c , uint8_t col, uint8_t p) {
   display_set_cur(col, p);
   if (c < 32 || c > 126) c = ' '; 

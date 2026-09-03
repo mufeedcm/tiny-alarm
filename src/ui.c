@@ -9,6 +9,7 @@
 
 static UI_State current_state = UI_STATE_CLOCK;
 
+
 void ui_init(void){
   current_state = UI_STATE_CLOCK;
   alarm_init();
@@ -20,6 +21,14 @@ void ui_update(void){
 
   rtc_time now;
   rtc_get_time(&now);
+
+  //brightness control
+  static uint8_t is_night = 0;
+  uint8_t night = (now.hour >= 22 || now.hour < 6);
+  if (night != is_night) {
+    is_night = night;
+    display_set_brightness(is_night ? 0x01 : 0xFF);
+  }
 
   if(current_state == UI_STATE_ALARM_RING){
 

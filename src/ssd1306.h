@@ -36,6 +36,7 @@
 void display_init(void);
 void display_clear(void);
 void display_set_cur(uint8_t column,uint8_t page);
+void display_set_brightness(uint8_t contrast);
 void display_write_char(char c, uint8_t col, uint8_t p);
 void display_write_string(const char *str, uint8_t col, uint8_t p);
 void display_write_big_digits(uint8_t col, uint8_t digit_idx);
