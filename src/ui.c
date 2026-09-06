@@ -101,8 +101,12 @@ static void ui_handle_edit_alarm(uint8_t btn) {
   if (btn & BTN_SET_CLICK) {
     if (alarm_sel < alarm_count) {
       switch (alarm_field) {
-        case 0: alarms[alarm_sel].hour = (alarms[alarm_sel].hour + 1) % 24; break;
-        case 1: alarms[alarm_sel].minute = (alarms[alarm_sel].minute + 1) % 60; break;
+        case 0: alarms[alarm_sel].hour = (alarms[alarm_sel].hour + 1) % 24;
+                alarms[alarm_sel].triggered_today = 0;
+                break;
+        case 1: alarms[alarm_sel].minute = (alarms[alarm_sel].minute + 1) % 60; 
+                alarms[alarm_sel].triggered_today = 0;
+                break;
         case 2: alarms[alarm_sel].enabled = !alarms[alarm_sel].enabled; break;
         case 3:
           alarm_delete(alarm_sel);
