@@ -77,6 +77,13 @@ void alarm_snooze(uint8_t minutes){
 
 uint8_t alarm_add(uint8_t hour, uint8_t minute) {
   if (alarm_count >= MAX_ALARMS) return 0;
+
+  for (uint8_t i = 0; i < alarm_count; i++) {
+    if (alarms[i].hour == (hour%24) && alarms[i].minute == (minute%60)) {
+      return 0; 
+    }
+  }
+
   alarms[alarm_count].hour = hour % 24;
   alarms[alarm_count].minute = minute % 60;
   alarms[alarm_count].enabled = 1;
