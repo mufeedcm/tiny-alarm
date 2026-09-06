@@ -17,14 +17,6 @@ void display_cmd(uint8_t cmd){
   i2c_stop();
 }
 
-void display_data(uint8_t data){
-  i2c_start();
-  i2c_write(SSD1306_DISPLAY_ADDR << 1); //0x3c << 1 = 0x78
-  i2c_write(0x40); //setting next byte as pixel data
-  i2c_write(data);
-  i2c_stop();
-}
-
 void display_set_cur(uint8_t column,uint8_t page){
   display_cmd(0xB0 + page);                   //page start location, 0xB0=page1 0xB1=page2.. 
   display_cmd(SSD1306_SETLOWCOLUMN + (column & 0x0F));        
@@ -34,9 +26,13 @@ void display_set_cur(uint8_t column,uint8_t page){
 void display_clear(void){
   for(uint8_t page = 0; page < (SSD1306_SCREEN_HEIGHT/8) ; page++){
     display_set_cur(0, page);
+    i2c_start();
+    i2c_write(SSD1306_DISPLAY_ADDR << 1); //0x3c << 1 = 0x78
+    i2c_write(0x40); //setting next byte as pixel data
     for(uint8_t col = 0; col < SSD1306_SCREEN_WIDTH; col++){
-      display_data(0x00); // set background 00-FF
+      i2c_write(0x00); // set background 00-FF
     }
+    i2c_stop();
   }
 }
 
@@ -69,12 +65,16 @@ void display_set_brightness(uint8_t contrast){
 
 void display_write_char(char c , uint8_t col, uint8_t p) {
   display_set_cur(col, p);
+  i2c_start();
+  i2c_write(SSD1306_DISPLAY_ADDR << 1); //0x3c << 1 = 0x78
+  i2c_write(0x40); //setting next byte as pixel data
   if (c < 32 || c > 126) c = ' '; 
   for (uint8_t i = 0; i < 5; i++) {
     uint8_t data = pgm_read_byte(&font[c - 32][i]);
-    display_data(data << 1); 
+    i2c_write(data << 1); 
   }
-  display_data(0x00); //1px gap b/w letters
+  i2c_write(0x00); //1px gap b/w letters
+  i2c_stop();
 }
 
 void display_write_string(const char *str, uint8_t col, uint8_t p) {
@@ -88,9 +88,13 @@ void display_write_big_digits(uint8_t digits, uint8_t col) {
   uint8_t width = 13; 
   for (uint8_t p = 0; p < 3; p++) {
     display_set_cur(col, p);
+    i2c_start();
+    i2c_write(SSD1306_DISPLAY_ADDR << 1); //0x3c << 1 = 0x78
+    i2c_write(0x40); //setting next byte as pixel data
     for (uint8_t c = 0; c < width; c++) {
       uint8_t data = pgm_read_byte(&font_big_num[digits][p][c]);
-      display_data(data);
+      i2c_write(data);
     }
+    i2c_stop();
   }
 }

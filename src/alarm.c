@@ -30,8 +30,8 @@ void alarm_stop(void){
 
 void alarm_snooze(uint8_t minutes){
   buzz_stop();
-  alarm_data.minute = (alarm_data.minute + 2)%60;
-  if(alarm_data.minute < 2){
+  alarm_data.minute = (alarm_data.minute + minutes)%60;
+  if(alarm_data.minute < minutes){
     alarm_data.hour = (alarm_data.hour + 1) % 24;
   }
   alarm_data.triggered_today = 0;

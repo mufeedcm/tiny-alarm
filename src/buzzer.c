@@ -6,7 +6,7 @@
 
 void buzz_init(void){
   DDRB |= ( 1 << DDB1);
-  PORTB &= (1 << PORTB);
+  PORTB &= ~(1 << PORTB);
 
 }
 void buzz_stop(void){

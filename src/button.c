@@ -1,7 +1,6 @@
 #include <avr/io.h>
 #include <stdint.h>
 #include <avr/interrupt.h>
-#include <util/delay.h>
 #include "button.h"
 
 
@@ -25,21 +24,18 @@ void btn_init(void){
 }
 
 ISR(INT0_vect){
-  _delay_ms(20);
   if(!(PIND & (1 << PIND2))){
     btn_event_flags |= BTN_MODE_CLICK;
   }
 }
 
 ISR(INT1_vect){
-  _delay_ms(20);
   if(!(PIND & (1 << PIND3))){
     btn_event_flags |= BTN_SELECT_CLICK;
   }
 }
 
 ISR(PCINT1_vect){
-  _delay_ms(20);
   if(!(PINC & (1 << PINC0))){
     btn_event_flags |= BTN_SET_CLICK;
   }

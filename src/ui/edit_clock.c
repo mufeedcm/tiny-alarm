@@ -66,7 +66,7 @@ void ui_render_edit_clock(uint8_t btn){
         break;
       case 7: 
         draft_time.year++;
-        if(draft_time.year >= 99) draft_time.year = 01;
+        if(draft_time.year >= 99) draft_time.year = 0;
         changed_fields |= CHANGED_YEAR;
         break;
     }

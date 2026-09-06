@@ -34,7 +34,6 @@ static void ui_render_date(rtc_time time){
   uint8_t month_i = (time.month >= 1 && time.month <= 12 ) ? time.month : 1;
 
   snprintf(date_str, sizeof(date_str), "%s %02d %s", day_names[day_i], time.date, month_names[month_i]);
-  display_set_cur(30, 3);
   display_write_string(date_str, 35, 3);
 }
 void ui_render_clock(){
