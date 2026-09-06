@@ -98,3 +98,11 @@ void display_write_big_digits(uint8_t digits, uint8_t col) {
     i2c_stop();
   }
 }
+
+void display_on(void){
+  display_cmd(SSD1306_DISPLAYON);
+}
+
+void display_off(void){
+  display_cmd(SSD1306_DISPLAYOFF);
+}

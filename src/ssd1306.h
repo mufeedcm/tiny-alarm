@@ -40,5 +40,7 @@ void display_set_brightness(uint8_t contrast);
 void display_write_char(char c, uint8_t col, uint8_t p);
 void display_write_string(const char *str, uint8_t col, uint8_t p);
 void display_write_big_digits(uint8_t col, uint8_t digit_idx);
+void display_on(void);
+void display_off(void);
 
 #endif

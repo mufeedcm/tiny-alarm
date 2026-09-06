@@ -23,11 +23,9 @@ This project is currently in early development.
 ### Todo
 
 - add passive buzzer.
-- add auto alarm timeout.
 - fix multiple button press in single click.
 - add auto repeat to set btn.
 - improve daily alarm reset.
-- add auto display off.
 - create a lot more custom font.
 - improve ui.
 - automatic day calculation from date.

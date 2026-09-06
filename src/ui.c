@@ -15,6 +15,9 @@ static uint8_t alarm_field = 0;
 
 static uint16_t ring_ticks = 0;
 
+static uint16_t idle_ticks = 0;
+static uint8_t display_state = 1;
+
 
 void ui_init(void){
   current_state = UI_STATE_CLOCK;
@@ -146,9 +149,30 @@ void ui_update(void){
   }
 
   if ((current_state != UI_STATE_ALARM_RING && current_state != UI_STATE_EDIT_ALARM) && alarm_check(&now)) {
+    display_on();        
+    display_state = 1;
+    idle_ticks = 0;
     display_clear();
     current_state = UI_STATE_ALARM_RING;
   }
+
+  if (btn != BTN_NONE) {
+    idle_ticks = 0;
+    if (!display_state) {
+      display_on();
+      display_state = 1;
+      return;
+    }
+  } else {
+    if (current_state != UI_STATE_ALARM_RING) {
+      idle_ticks++;
+      if (idle_ticks >= 120 && display_state) {
+        display_off();
+        display_state = 0;
+      }
+    }
+  }
+  if (!display_state) return;
 
   switch (current_state) {
     case UI_STATE_CLOCK:      ui_handle_clock(btn);      break;
