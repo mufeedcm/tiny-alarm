@@ -13,6 +13,8 @@ static uint8_t alarm_sel = 0;
 static uint8_t alarm_top = 0;
 static uint8_t alarm_field = 0;
 
+static uint16_t ring_ticks = 0;
+
 
 void ui_init(void){
   current_state = UI_STATE_CLOCK;
@@ -113,14 +115,17 @@ static void ui_handle_edit_alarm(uint8_t btn) {
 }
 
 static void ui_handle_alarm_ring(uint8_t btn) {
+  ring_ticks++;
   if (btn & BTN_SELECT_CLICK) {
     alarm_stop();
     display_clear();
+    ring_ticks = 0;
     current_state = UI_STATE_CLOCK;
     return;
-  } else if (btn & BTN_SET_CLICK) {
+  } else if ((btn & BTN_SET_CLICK) || (ring_ticks>=1200)) {
     alarm_snooze(5);
     display_clear();
+    ring_ticks = 0;
     current_state = UI_STATE_CLOCK;
     return;
   }

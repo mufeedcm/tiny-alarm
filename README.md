@@ -24,7 +24,6 @@ This project is currently in early development.
 
 - add passive buzzer.
 - add auto alarm timeout.
-- fix duplicate alarms.
 - fix multiple button press in single click.
 - add auto repeat to set btn.
 - improve daily alarm reset.
