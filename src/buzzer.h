@@ -5,6 +5,7 @@
 
 void buzz_init(void);
 void buzz_stop(void);
+void buzz_tone(uint16_t freq_hz);
 void buzz_click_beep(void);
 void buzz_alarm_beep(void);
 

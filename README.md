@@ -22,12 +22,12 @@ This project is currently in early development.
 
 ### Todo
 
-- add passive buzzer.
 - fix multiple button press in single click.
 - add auto repeat to set btn.
 - improve daily alarm reset.
 - create a lot more custom font.
 - improve ui.
+- add more alarm tones
 - automatic day calculation from date.
 - 12hr and 24hr toggle.
 - add battery charge.
