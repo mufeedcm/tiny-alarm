@@ -1,5 +1,5 @@
 MCU = atmega328p
-F_CPU = 1000000UL
+F_CPU = 16000000UL
 PORT = /dev/ttyUSB0
 SRC = src/*.c src/ui/*.c
 VERSION = 0.0.0
