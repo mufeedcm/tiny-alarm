@@ -46,7 +46,7 @@ void buzz_tone(uint16_t freq_hz) {
     return;
   }
 
-  uint16_t ocr_val = (uint16_t)((62500UL / freq_hz) - 1);
+  uint16_t ocr_val = (uint16_t)((1000000UL / freq_hz) - 1);
 
   TCCR1A = 0;
   TCCR1B = 0;
