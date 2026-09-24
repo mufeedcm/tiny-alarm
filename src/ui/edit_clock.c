@@ -29,44 +29,81 @@ void ui_render_edit_clock(uint8_t btn){
 
   uint8_t max_days = (draft_time.month == 2) ? ((draft_time.year % 4 == 0) ? 29 : 28) : ((draft_time.month == 4 ||  draft_time.month == 6 || draft_time.month == 9 || draft_time.month == 11) ? 30 : 31);
 
-  if(btn & BTN_SET_CLICK){
+  if (btn & (BTN_INC_CLICK | BTN_DEC_CLICK)) {
     switch (selected_field) {
       case 0: 
-        draft_time.hour++;
-        if(draft_time.hour >= 24) draft_time.hour = 0;
+        if (btn & BTN_INC_CLICK) {
+          draft_time.hour++;
+          if (draft_time.hour >= 24) draft_time.hour = 0;
+        } else {
+          if (draft_time.hour == 0) draft_time.hour = 23;
+          else draft_time.hour--;
+        }
         changed_fields |= CHANGED_HOUR;
         break;
-      case 1: 
-        draft_time.minute++;
-        if(draft_time.minute >= 60) draft_time.minute = 0;
+
+      case 1:
+        if (btn & BTN_INC_CLICK) {
+          draft_time.minute++;
+          if (draft_time.minute >= 60) draft_time.minute = 0;
+        } else {
+          if (draft_time.minute == 0) draft_time.minute = 59;
+          else draft_time.minute--;
+        }
         changed_fields |= CHANGED_MINUTE;
         break;
-      case 2: 
+
+      case 2:
         draft_time.second = 0;
         changed_fields |= CHANGED_SECOND;
         break;
-      case 3: 
-        draft_time.hour = (draft_time.hour + 12)%24;
+
+      case 3:
+        draft_time.hour = (draft_time.hour + 12) % 24;
         changed_fields |= CHANGED_HOUR;
         break;
-      case 4: 
-        draft_time.day++;
-        if(draft_time.day > 7) draft_time.day = 1;
+
+      case 4:
+        if (btn & BTN_INC_CLICK) {
+          draft_time.day++;
+          if (draft_time.day > 7) draft_time.day = 1;
+        } else {
+          draft_time.day--;
+          if (draft_time.day < 1) draft_time.day = 7;
+        }
         changed_fields |= CHANGED_DAY;
         break;
-      case 5: 
-        draft_time.date++;
-        if(draft_time.date > max_days) draft_time.date = 1;
+
+      case 5:
+        if (btn & BTN_INC_CLICK) {
+          draft_time.date++;
+          if (draft_time.date > max_days) draft_time.date = 1;
+        } else {
+          draft_time.date--;
+          if (draft_time.date < 1) draft_time.date = max_days;
+        }
         changed_fields |= CHANGED_DATE;
         break;
-      case 6: 
-        draft_time.month++;
-        if(draft_time.month > 12) draft_time.month = 1;
+
+      case 6:
+        if (btn & BTN_INC_CLICK) {
+          draft_time.month++;
+          if (draft_time.month > 12) draft_time.month = 1;
+        } else {
+          draft_time.month--;
+          if (draft_time.month < 1) draft_time.month = 12;
+        }
         changed_fields |= CHANGED_MONTH;
         break;
+
       case 7: 
-        draft_time.year++;
-        if(draft_time.year >= 99) draft_time.year = 0;
+        if (btn & BTN_INC_CLICK) {
+          draft_time.year++;
+          if (draft_time.year >= 100) draft_time.year = 0;
+        } else {
+          if (draft_time.year == 0) draft_time.year = 99;
+          else draft_time.year--;
+        }
         changed_fields |= CHANGED_YEAR;
         break;
     }

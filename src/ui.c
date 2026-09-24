@@ -56,14 +56,14 @@ static void ui_handle_alarms(uint8_t btn) {
     }
   }
 
-  if (btn & BTN_SET_CLICK) {
+  if (btn & (BTN_INC_CLICK | BTN_DEC_CLICK)) {
     display_clear();
     alarm_field = 0;
     if (alarm_sel < alarm_count) {
       ui_edit_alarm_init(alarm_sel);
       current_state = UI_STATE_EDIT_ALARM;
     } else {
-      if (alarm_add(7, 0)) {
+      if (alarm_add(5, 0)) {
         ui_edit_alarm_init(alarm_count - 1);
         current_state = UI_STATE_EDIT_ALARM;
       }
@@ -98,21 +98,37 @@ static void ui_handle_edit_alarm(uint8_t btn) {
     alarm_field = (alarm_field + 1) % 4;
   }
 
-  if (btn & BTN_SET_CLICK) {
+  if (btn & (BTN_INC_CLICK | BTN_DEC_CLICK)) {
+    int8_t dir = (btn & BTN_INC_CLICK) ? 1 : -1;
     if (alarm_sel < alarm_count) {
       switch (alarm_field) {
-        case 0: alarms[alarm_sel].hour = (alarms[alarm_sel].hour + 1) % 24;
-                alarms[alarm_sel].triggered_today = 0;
-                break;
-        case 1: alarms[alarm_sel].minute = (alarms[alarm_sel].minute + 1) % 60; 
-                alarms[alarm_sel].triggered_today = 0;
-                break;
+        case 0: 
+          if (btn & BTN_INC_CLICK) {
+            alarms[alarm_sel].hour++;
+            if (alarms[alarm_sel].hour >= 24) alarms[alarm_sel].hour = 0;
+          } else {
+            if (alarms[alarm_sel].hour == 0) alarms[alarm_sel].hour = 23;
+            else alarms[alarm_sel].hour--;
+          }
+          alarms[alarm_sel].triggered_today = 0;
+          break;
+
+        case 1: 
+          if (btn & BTN_INC_CLICK) {
+            alarms[alarm_sel].minute++;
+            if (alarms[alarm_sel].minute >= 60) alarms[alarm_sel].minute = 0;
+          } else {
+            if (alarms[alarm_sel].minute == 0) alarms[alarm_sel].minute = 59;
+            else alarms[alarm_sel].minute--;
+          }
+          alarms[alarm_sel].triggered_today = 0;
+          break;
         case 2: alarms[alarm_sel].enabled = !alarms[alarm_sel].enabled; break;
         case 3:
-          alarm_delete(alarm_sel);
-          display_clear();
-          current_state = UI_STATE_ALARMS;
-          return;
+                alarm_delete(alarm_sel);
+                display_clear();
+                current_state = UI_STATE_ALARMS;
+                return;
       }
       alarm_save();
     }
@@ -129,7 +145,7 @@ static void ui_handle_alarm_ring(uint8_t btn) {
     ring_ticks = 0;
     current_state = UI_STATE_CLOCK;
     return;
-  } else if ((btn & BTN_SET_CLICK) || (ring_ticks>=1200)) {
+  } else if ((btn & BTN_TOUCH_CLICK) || (ring_ticks>=1200)) {
     alarm_snooze(5);
     display_clear();
     ring_ticks = 0;
