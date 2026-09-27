@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "tiny-alarm")(type "KiCad")(uri "${KIPRJMOD}/tiny-alarm.kicad_sym")(options "")(descr ""))
+)
