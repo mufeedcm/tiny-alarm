@@ -63,7 +63,7 @@ static void ui_handle_alarms(uint8_t btn) {
       ui_edit_alarm_init(alarm_sel);
       current_state = UI_STATE_EDIT_ALARM;
     } else {
-      if (alarm_add(5, 0)) {
+      if (alarm_add(7, 0)) {
         ui_edit_alarm_init(alarm_count - 1);
         current_state = UI_STATE_EDIT_ALARM;
       }
