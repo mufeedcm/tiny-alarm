@@ -26,7 +26,7 @@ void ui_init(void){
 }
 
 static void ui_handle_clock(uint8_t btn){
-  if(btn & BTN_MODE_CLICK){
+  if(btn & BTN_MODE_TOUCH){
     display_clear();
     buzz_click_beep();
     current_state = UI_STATE_ALARMS;
@@ -38,7 +38,7 @@ static void ui_handle_clock(uint8_t btn){
 static void ui_handle_alarms(uint8_t btn) {
   uint8_t total = (alarm_count < MAX_ALARMS) ? (alarm_count + 1) : MAX_ALARMS;
 
-  if (btn & BTN_MODE_CLICK) {
+  if (btn & BTN_MODE_TOUCH) {
     display_clear();
     buzz_click_beep();
     ui_edit_clock_init();
@@ -75,7 +75,7 @@ static void ui_handle_alarms(uint8_t btn) {
 }
 
 static void ui_handle_edit_clock(uint8_t btn) {
-  if (btn & BTN_MODE_CLICK) {
+  if (btn & BTN_MODE_TOUCH) {
     display_clear();
     buzz_click_beep();
     ui_edit_clock_exit();
@@ -86,7 +86,7 @@ static void ui_handle_edit_clock(uint8_t btn) {
 }
 
 static void ui_handle_edit_alarm(uint8_t btn) {
-  if (btn & BTN_MODE_CLICK) {
+  if (btn & BTN_MODE_TOUCH) {
     display_clear();
     buzz_click_beep();
     current_state = UI_STATE_ALARMS; 
@@ -145,7 +145,7 @@ static void ui_handle_alarm_ring(uint8_t btn) {
     ring_ticks = 0;
     current_state = UI_STATE_CLOCK;
     return;
-  } else if ((btn & BTN_TOUCH_CLICK) || (ring_ticks>=1200)) {
+  } else if ((btn & BTN_MODE_TOUCH) || (ring_ticks>=1200)) {
     alarm_snooze(5);
     display_clear();
     ring_ticks = 0;

@@ -22,8 +22,8 @@ This project is currently in early development.
 
 ### Todo
 
-- fix multiple button press in single click.
-- add auto repeat to set btn.
+- add touch hold.
+- set initial new alarm time to current time.
 - improve daily alarm reset.
 - create a lot more custom font.
 - improve ui.
@@ -33,7 +33,6 @@ This project is currently in early development.
 - add battery charge.
 - add rtc power loss warning.
 - add snooze limit.
-- add more alarm tones. 
 - add alarm day scheduling (daily/mon-fri).
 - add stopwatch/timer.
 - design pcb & case.

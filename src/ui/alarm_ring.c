@@ -29,8 +29,7 @@ static void ui_render_time(rtc_time time){
 }
 
 static void ui_render_btn_info(){
-    display_write_string("[STOP]", 40, 3);
-    display_write_string("[SNOOZE]", 80, 3);
+    display_write_string("[STOP]", 10, 3);
 }
 void ui_render_alarm_ring(){
     rtc_time now;
